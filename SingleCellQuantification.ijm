@@ -26,15 +26,21 @@ selectWindow(greenImage);
 // Restore the saved ROI
 roiManager("Select", 0);
 
-// Set threshold for the green channel (100, 255)
-setThreshold(100, 255);
+// Set threshold for the green channel (100, 255) must be manually changed to the specifics of the threshold you want 
+setThreshold(70, 255);
 run("Measure");
 
 // Reset ROI Manager to clear it
 roiManager("reset");
+
+// Save the current scale
+getPixelSize(unit, pixelWidth, pixelHeight);
 
 // Close all open images
 run("Close All");
 
 // Reopen the original image from the file
 open(originalImage);
+
+// Reapply the scale to the reopened image
+run("Set Scale...", "distance=1 known=" + pixelWidth + " unit=" + unit + " global");
